@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:cartopia/common/widgets/bottom_bar.dart';
 import 'package:cartopia/constants/error_handle.dart';
 import 'package:cartopia/constants/secret.dart';
 import 'package:cartopia/constants/utils.dart';
@@ -89,7 +90,7 @@ class AuthService {
             await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
             Navigator.pushNamedAndRemoveUntil(
               context, 
-              HomeScreen.routeName, 
+              BottomBar.routeName, 
               (route) => false);
           });
         

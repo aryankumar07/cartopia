@@ -1,6 +1,7 @@
+import 'package:cartopia/common/widgets/bottom_bar.dart';
 import 'package:cartopia/features/auth/screen/auth_screen.dart';
 import 'package:cartopia/features/auth/services/auth_service.dart';
-import 'package:cartopia/features/home/screens/home_screen.dart';
+// import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/provider/user_provider.dart';
 import 'package:cartopia/router.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _MyappState extends State<Myapp> {
       onGenerateRoute: (settings)=> generateRoute(settings),
 
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty ? 
-            HomeScreen() :
+            BottomBar() :
             AuthScreen()
     );
   }
