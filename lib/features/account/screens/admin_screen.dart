@@ -1,25 +1,29 @@
 import 'package:cartopia/constants/global_var.dart';
+import 'package:cartopia/features/account/screens/post_screens.dart';
 import 'package:cartopia/features/accounts/screens/account_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:flutter/material.dart';
 
-class BottomBar extends StatefulWidget {
-  static const String routeName = '/actual-home';
-  const BottomBar({super.key});
+class AdminScreen extends StatefulWidget {
+  const AdminScreen({super.key});
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<AdminScreen> createState() => _AdminScreenState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _AdminScreenState extends State<AdminScreen> {
   int _page = 0;
   double bottombarWidth =40;
   double bottomBArBorderWidth = 5;
   List<Widget> pages = [
-    HomeScreen(),
-    AccountScreen(),
-    Center(child: Text('Shopping page'),)
+    PostScreen(),
+    Center(
+      child: Text('Analytics Page'),
+    ),
+    Center(
+      child: Text('Cart Page'),
+    ),
   ];
 
   void updatePage(int page){
@@ -27,11 +31,40 @@ class _BottomBarState extends State<BottomBar> {
       _page = page;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_page],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50), 
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: GlobalVariables.appBarGradient 
+            ),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/app_logo.png',
+                  width: 80,
+                  height: 100,
+                ),
+              ),
+
+              Text(
+                'Admin',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                  ),
+              )
+            ],
+          ),
+        )),
+        body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
          currentIndex: _page,
          selectedItemColor: GlobalVariables.selectedNavBarColor,
@@ -86,16 +119,10 @@ class _BottomBarState extends State<BottomBar> {
                   )
                 )
               ),
-              child: badges.Badge(
-                badgeContent: Text('2'),
-                badgeStyle: badges.BadgeStyle(
-                  badgeColor: Colors.white
-                ),
-                child: Icon(Icons.shopping_cart_outlined),
-              )
+              child: Icon(Icons.all_inbox_outlined),
             )),
         ]
-        ),  
+        ),
     );
   }
 }

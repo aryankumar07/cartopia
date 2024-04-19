@@ -1,4 +1,5 @@
 import 'package:cartopia/common/widgets/bottom_bar.dart';
+import 'package:cartopia/features/account/screens/add_product_screen.dart';
 import 'package:cartopia/features/auth/screen/auth_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
       return MaterialPageRoute(
         settings: routeSettings,
         builder: (_)=>BottomBar ());
+
+        case AddProductScreen.routeName:
+      return MaterialPageRoute(
+        settings: routeSettings,
+        builder: (_)=>AddProductScreen());
 
     default:
       return MaterialPageRoute(
