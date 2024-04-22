@@ -1,5 +1,5 @@
 import 'package:cartopia/constants/global_var.dart';
-import 'package:cartopia/features/account/screens/post_screens.dart';
+import 'package:cartopia/features/admin/screens/post_screens.dart';
 import 'package:cartopia/features/accounts/screens/account_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:badges/badges.dart' as badges;

@@ -1,12 +1,13 @@
 import 'dart:io';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cartopia/common/widgets/custom_button.dart';
 import 'package:cartopia/common/widgets/custom_textfield.dart';
 import 'package:cartopia/constants/global_var.dart';
 import 'package:cartopia/constants/utils.dart';
+import 'package:cartopia/features/admin/service/admin_service.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName = '/add-product';
@@ -17,6 +18,8 @@ class AddProductScreen extends StatefulWidget {
 }
 
 class _AddProductScreenState extends State<AddProductScreen> {
+  final AdminService adminService = AdminService();
+  final _addProductFormKey = GlobalKey<FormState>();
   final TextEditingController _productNamecontroller = TextEditingController();
   final TextEditingController _desciptioncontroller = TextEditingController();
   final TextEditingController _pricecontroller = TextEditingController();
@@ -29,6 +32,20 @@ class _AddProductScreenState extends State<AddProductScreen> {
     'water color',
     'wall',
   ];
+
+  void sellProduct() {
+    if(_addProductFormKey.currentState!.validate() && images.isNotEmpty){
+      adminService.sellProduct(
+        context: context, 
+        name: _productNamecontroller.text, 
+        description: _desciptioncontroller.text, 
+        price: double.parse(_pricecontroller.text),
+        quantity: double.parse(_quantitycontroller.text), 
+        category: category, 
+        images: images);
+
+    }
+  }
 
   String category = "hardCover";
   List<File> images = [];
@@ -76,6 +93,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         )),
         body: SingleChildScrollView(
           child: Form(
+            key: _addProductFormKey,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal:10),
               child: Column(
@@ -161,14 +179,16 @@ class _AddProductScreenState extends State<AddProductScreen> {
                               child: Text(item));
                           }).toList(), 
                           onChanged: (String? newval) {
-                            category = newval!;
+                            setState(() {
+                              category = newval!;
+                            });
                           }),
                       ),
 
                       SizedBox(height: 10,),
                       CustomButton(
                         text: 'Sell', 
-                      onTap: (){})
+                      onTap: sellProduct)
                 ],
               ),
             )),

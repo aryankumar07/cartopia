@@ -1,5 +1,5 @@
 import 'package:cartopia/common/widgets/bottom_bar.dart';
-import 'package:cartopia/features/account/screens/admin_screen.dart';
+import 'package:cartopia/features/admin/screens/admin_screen.dart';
 import 'package:cartopia/features/auth/screen/auth_screen.dart';
 import 'package:cartopia/features/auth/services/auth_service.dart';
 // import 'package:cartopia/features/home/screens/home_screen.dart';
