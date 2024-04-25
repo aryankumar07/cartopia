@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CustomButton extends StatelessWidget{
   final String text;
   final VoidCallback onTap;
+  final Color? color;
 CustomButton({
   required this.text,
   required this.onTap,
+  this.color,
   super.key
   });
 @override
@@ -13,9 +15,15 @@ CustomButton({
     return ElevatedButton(
       onPressed:  onTap,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(double.infinity, 50)
+        minimumSize: Size(double.infinity, 50),
+        primary: color
       ), 
-      child: Text(text)
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color == null ? Colors.white : Colors.black
+        ),
+        )
       );
   }
 }

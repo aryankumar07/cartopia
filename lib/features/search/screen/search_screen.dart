@@ -1,33 +1,56 @@
+import 'package:cartopia/common/widgets/loader.dart';
 import 'package:cartopia/constants/global_var.dart';
 import 'package:cartopia/features/home/widgets/address_box.dart';
-import 'package:cartopia/features/home/widgets/crousel_image.dart';
-import 'package:cartopia/features/home/widgets/newset_product.dart';
-import 'package:cartopia/features/home/widgets/top_categories.dart';
-import 'package:cartopia/features/search/screen/search_screen.dart';
-import 'package:cartopia/provider/user_provider.dart';
+import 'package:cartopia/features/product_detail/screens/product_detail_screen.dart';
+import 'package:cartopia/features/search/service/search_service.dart';
+import 'package:cartopia/features/search/widgets/search_product.dart';
+import 'package:cartopia/model/product.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home';
-  const HomeScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  static const  String routeName = '/search-screen';
+  final String searchQuery;
+  const SearchScreen({
+    required this.searchQuery,
+    super.key
+    });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
 
-
+  List<Product>? products;
+  SearchService searchService = SearchService();
+  
   void navigateToSearchScreen(String query){
     Navigator.pushNamed(context, SearchScreen.routeName,arguments: query);
   }
 
+   @override
+  void initState() {
+    super.initState();
+    fetchSearchedProduct();
+  }
+
+  void fetchSearchedProduct() async {
+    products = await searchService.fetchSearchProducts(
+      context: context,
+      searchQuery: widget.searchQuery
+      );
+    
+    print(products);
+      setState(() {});
+  }
+
+  void navigateToProductDetail(Product product){
+    Navigator.pushNamed(context, ProductDetailScreen.routeName,arguments: product);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
-    return Scaffold(
+    return products == null ? Loader()  : Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50), 
         child: AppBar(
@@ -95,20 +118,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         )),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            AddressBox(),
-            TopCategories(),
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text('Deal of the days'),
-            ),
-            ClImages(),
-            SizedBox(height: 30,),
-            NewProduct(),
-          ],
-        ),
+      body: Column(
+        children: [
+          AddressBox(),
+          SizedBox(height: 10,),
+          Expanded(
+            child: ListView.builder(
+              itemCount: products!.length,
+              itemBuilder: (context,index){
+                return  GestureDetector(
+                  onTap: ()=>navigateToProductDetail(products![index]),
+                  child: SearchProduct(product: products![index]));
+            }))
+        ],
       )
     );
   }

@@ -8,7 +8,7 @@ class ClImages extends StatelessWidget{
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return CarouselSlider(
       items: GlobalVariables.carouselImages.map((e){
         return Builder(
