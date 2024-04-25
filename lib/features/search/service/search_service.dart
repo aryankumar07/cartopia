@@ -4,6 +4,7 @@ import 'package:cartopia/constants/error_handle.dart';
 import 'package:cartopia/constants/secret.dart';
 import 'package:cartopia/constants/utils.dart';
 import 'package:cartopia/model/product.dart';
+import 'package:cartopia/model/rating.dart';
 import 'package:cartopia/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -46,6 +47,12 @@ class SearchService {
             images: List<String>.from(productMap['images']),
             category: productMap['category'] ?? '',
             id: productMap['_id'],
+            rating: productMap['ratings'] != null ? 
+              List<Rating>.from(productMap['ratings']?.map(
+              (x)=>Rating(userId: x['userId'], 
+              rating:  double.parse(x['rating'].toString()))
+                ))
+                : null,
           );
           print('Product $i: $product'); // Debug print
           products.add(product);

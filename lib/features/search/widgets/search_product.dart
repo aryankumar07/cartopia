@@ -16,7 +16,7 @@ class SearchProduct extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    double totalRating =0;
+    double totalRating = 0;
     double averageRating = 0;
     for(int i=0;i<product.rating!.length;i++){
       totalRating+=product.rating![i].rating;
