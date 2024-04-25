@@ -1,7 +1,9 @@
 import 'package:cartopia/common/widgets/stars.dart';
 import 'package:cartopia/model/product.dart';
+import 'package:cartopia/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class SearchProduct extends StatelessWidget{
   final Product product;
@@ -14,6 +16,15 @@ class SearchProduct extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    double totalRating =0;
+    double averageRating = 0;
+    for(int i=0;i<product.rating!.length;i++){
+      totalRating+=product.rating![i].rating;
+    }
+    // print(' total is $totalRating');
+    if(totalRating!=0){
+      averageRating = totalRating/product.rating!.length;
+    }
     return Container(
       height: 170,
       padding: EdgeInsets.all(10),
@@ -44,7 +55,7 @@ class SearchProduct extends StatelessWidget{
                 ),
 
                 Container(
-                  child: Stars(ratings: 4),
+                  child: Stars(ratings: averageRating),
                 ),
 
                 SizedBox(height: 20,),

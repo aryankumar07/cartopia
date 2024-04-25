@@ -2,10 +2,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cartopia/common/widgets/custom_button.dart';
 import 'package:cartopia/common/widgets/stars.dart';
 import 'package:cartopia/constants/global_var.dart';
+import 'package:cartopia/features/product_detail/service/product_detail_service.dart';
 import 'package:cartopia/features/search/screen/search_screen.dart';
 import 'package:cartopia/model/product.dart';
+import 'package:cartopia/provider/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 
 
 class ProductDetailScreen extends StatefulWidget {
@@ -24,9 +27,52 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
+  final ProductDetailService productDetailService = ProductDetailService();
+
+  double averageRating = 0;
+  double myRating = 0;
 
   void navigateToSearchScreen(String query){
     Navigator.pushNamed(context, SearchScreen.routeName,arguments: query);
+  }
+
+  // void updateVal(){
+  //   setState(() {
+  //     print('setting state');
+  //     double totalRating =0;
+  //     for(int i=0;i<widget.product.rating!.length;i++){
+  //       totalRating+=widget.product.rating![i].rating;
+  //       if(widget.product.rating![i].userId == 
+  //       Provider.of<UserProvider>(context,listen: false).user.id
+  //       ){
+  //         myRating = widget.product.rating![i].rating; 
+  //       }
+  //     }
+  //     if(totalRating!=0){
+  //       averageRating = totalRating/widget.product.rating!.length;
+  //     }
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    double totalRating =0;
+    for(int i=0;i<widget.product.rating!.length;i++){
+      print('value are ${widget.product.rating![i].rating}');
+      totalRating+=widget.product.rating![i].rating;
+      if(widget.product.rating![i].userId == 
+       Provider.of<UserProvider>(context,listen: false).user.id
+      ){
+        myRating = widget.product.rating![i].rating; 
+      }
+    }
+    // print(' total is $totalRating');
+    if(totalRating!=0){
+      averageRating = totalRating/widget.product.rating!.length;
+    }
+    // print(averageRating);
+    // print(myRating);
   }
 
 
@@ -113,7 +159,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     Text(
                     widget.product.id!,
                     ),
-                    Stars(ratings: 4),
+                    Stars(ratings: averageRating),
                   ],
                 ),
               ),
@@ -207,14 +253,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ),
 
             RatingBar.builder(
-              initialRating: 0,
+              initialRating: myRating,
               minRating: 1,
               direction: Axis.horizontal,
               allowHalfRating: true,
               itemCount: 5,
               itemPadding: EdgeInsets.symmetric(horizontal: 4),
               itemBuilder: (context,_)=>Icon(Icons.star,color: GlobalVariables.secondaryColor,), 
-              onRatingUpdate: (rating){}),
+              onRatingUpdate: (rating){
+                productDetailService.rateProduct(
+                  context: context, 
+                  product: widget.product,
+                  rating: rating);
+                  // updateVal();
+              }),
 
             ],
           ),

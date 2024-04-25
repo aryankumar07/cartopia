@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:cartopia/model/rating.dart';
+
 class Product {
   final String name;
   final String description;
@@ -9,6 +11,7 @@ class Product {
   final String category;
   final String? id;
   final List<String> images;
+  final List<Rating>? rating;
 
   Product({
     required this.name, 
@@ -17,7 +20,8 @@ class Product {
     required this.price, 
     required this.images, 
     required this.category,
-    required this.id,
+    this.id,
+    this.rating
     });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +33,7 @@ class Product {
       'images': images,
       'category': category,
       'id': id,
+      'rating':rating
     };
   }
 
@@ -41,6 +46,11 @@ class Product {
       images: List<String>.from((map['images'])),
       category: map['category'] ?? '',
       id: map['_id'],
+      rating: map['ratings'] != null ? 
+      List<Rating>.from(map['ratings']?.map(
+        (x)=>Rating.fromMap(x)
+      ))
+       : null,
       );
   }
 

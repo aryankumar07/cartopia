@@ -41,6 +41,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
   Widget build(BuildContext context) {
 
     void navigateToProductDetail(Product product){
+      print('in the category : ${product.rating![0].rating}');
       Navigator.pushNamed(context, ProductDetailScreen.routeName,arguments: product);
     }
 

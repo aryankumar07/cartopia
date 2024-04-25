@@ -20,6 +20,6 @@ class Stars extends StatelessWidget{
       rating: ratings,
       itemSize: 15,
       itemBuilder: (context,_)=>
-      Icon(Icons.star_border,color: GlobalVariables.secondaryColor,));
+      Icon(Icons.star,color: GlobalVariables.secondaryColor,));
   }
 }
