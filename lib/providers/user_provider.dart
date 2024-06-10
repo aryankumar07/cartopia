@@ -1,12 +1,12 @@
-import 'package:cartopia/model/user_model.dart';
+import 'package:cartopia/models/user.dart';
 import 'package:flutter/material.dart';
 
-class UserProvider extends ChangeNotifier {
+class userProvider extends ChangeNotifier {
   User _user = User(
-    id: '', 
     name: '', 
     email: '', 
     password: '', 
+    id: '', 
     address: '', 
     type: '', 
     token: '');
@@ -15,7 +15,6 @@ class UserProvider extends ChangeNotifier {
 
     void setUser(String user){
       _user = User.fromJson(user);
-      notifyListeners(); 
+      notifyListeners();
     }
-
 }

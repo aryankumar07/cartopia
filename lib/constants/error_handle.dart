@@ -3,23 +3,20 @@ import 'dart:convert';
 import 'package:cartopia/constants/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-void httpErrorHandle({
+void HttpErrorhandler({
   required http.Response response,
   required BuildContext context,
-  required VoidCallback onSuccess,
+  required VoidCallback onpresed,
 }){
-   switch(response.statusCode){
-    case 200:
-      onSuccess();
-      break;
+  switch(response.statusCode) {
+    case 200 :
+    onpresed();
+    break;
     case 400:
-      ShowSnackBar(context, jsonDecode(response.body)['msg']);
-      break;
+    showsnackbar(context, jsonDecode(response.body)['msg']);
     case 500:
-      ShowSnackBar(context, jsonDecode(response.body)['msg']);
-      break;
+    showsnackbar(context, jsonDecode(response.body)['error']);
     default:
-      ShowSnackBar(context, jsonDecode(response.body));
-   }
+    showsnackbar(context, response.body);
+  }
 }
