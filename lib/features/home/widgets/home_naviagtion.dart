@@ -92,7 +92,7 @@ class _TopBarState extends State<TopBar> {
                       onTap: changeToaddProduct,
                       child: Container(
                         child: Text(
-                          'Liked',
+                          'Categroies',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w400,

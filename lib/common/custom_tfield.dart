@@ -5,10 +5,12 @@ class CustomTextField extends StatelessWidget{
 
   final  TextEditingController controler;
   final String hinttext;
+  final int maxlines;
 
   CustomTextField({
     required this.controler,
     required this.hinttext,
+    this.maxlines=1,
   });
 
 
@@ -16,6 +18,7 @@ class CustomTextField extends StatelessWidget{
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controler,
+      maxLines: maxlines,
       decoration: InputDecoration(
         hintText: hinttext,
         border: OutlineInputBorder(
