@@ -1,3 +1,4 @@
+import 'package:cartopia/features/home/widgets/home_naviagtion.dart';
 import 'package:cartopia/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
     return Scaffold(
-      body: Center(child: Text(user.toJson()),),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            TopBar(),
+          ],
+        ),
+      )
     );
   }
 }

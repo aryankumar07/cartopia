@@ -1,27 +1,16 @@
-import 'package:cartopia/features/account/screen/account_screen.dart';
-import 'package:cartopia/features/home/screens/home_screen.dart';
+import 'package:cartopia/features/admin/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 
-class BottomBar extends StatefulWidget {
-
-  static const String routeName = '/actual-home';
-
-
-  const BottomBar({super.key});
+class AdminScreen extends StatefulWidget {
+  const AdminScreen({super.key});
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<AdminScreen> createState() => _AdminScreenState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _AdminScreenState extends State<AdminScreen> {
 
   int _page = 0;
-
-  final List<Widget> pages = [
-    HomeScreen(),
-    AccountScreen(),
-    Center(child: Text('Cart page'),),
-  ];
 
   void updatePage(int page){
     setState(() {
@@ -29,12 +18,40 @@ class _BottomBarState extends State<BottomBar> {
     });
   }
 
+  List<Widget> adminList = [
+    PostScreen(),
+    Center(child: Text('analtics'),),
+    Center(child: Text('inbox'),),
+  ];
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[_page],
+      appBar: AppBar(
+        backgroundColor: Colors.brown,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Welcome to Etst',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w400
+              ),
+            ),
+            Text(
+              'Admin',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.w400
+              ),
+            )
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: updatePage,
         selectedItemColor: Colors.green,
@@ -42,6 +59,7 @@ class _BottomBarState extends State<BottomBar> {
         backgroundColor: Colors.white,
         iconSize: 24,
         items: [
+
           BottomNavigationBarItem(
             label: '',
             icon: Container(
@@ -56,8 +74,8 @@ class _BottomBarState extends State<BottomBar> {
             )),
 
             BottomNavigationBarItem(
-            label: '',
-            icon: Container(
+              label: '',
+              icon: Container(
               width: 52,
               decoration: BoxDecoration(
                 border: Border(top: BorderSide(
@@ -65,12 +83,12 @@ class _BottomBarState extends State<BottomBar> {
                   width: 5
                 ))
               ),
-              child: Icon(Icons.person),
+              child: Icon(Icons.analytics),
             )),
 
             BottomNavigationBarItem(
-            label: '',
-            icon: Container(
+              label: '',
+              icon: Container(
               width: 52,
               decoration: BoxDecoration(
                 border: Border(top: BorderSide(
@@ -78,9 +96,12 @@ class _BottomBarState extends State<BottomBar> {
                   width: 5
                 ))
               ),
-              child: Icon(Icons.shopping_bag),
-            )),
+              child: Icon(Icons.all_inbox_outlined),
+            ))
         ]),
+
+        body: adminList[_page],
+
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cartopia/constants/bottom_bar.dart';
+import 'package:cartopia/features/admin/screens/admin_screen.dart';
 // import 'package:cartopia/features/auth/home/screens/home_screen.dart';
 import 'package:cartopia/features/auth/screens/auth_screen.dart';
 import 'package:cartopia/features/auth/service/auth_service.dart';
@@ -30,13 +31,14 @@ class _MyappState extends State<Myapp> {
 
   @override
   void initState() {
-    authService.getuserdata(context: context);
     super.initState();
+    authService.getuserdata(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ETSY',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
@@ -50,7 +52,10 @@ class _MyappState extends State<Myapp> {
         primarySwatch: Colors.green
       ),
       onGenerateRoute: (routeSettings) => generateRoute(routeSettings) ,
-      home: Provider.of<userProvider>(context).user.token.isNotEmpty ? BottomBar() : AuthScreen(),
+      home: Provider.of<userProvider>(context).user.token.isNotEmpty ?
+      Provider.of<userProvider>(context).user.type=='user' ? 
+       BottomBar() : AdminScreen()
+      : AuthScreen(),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:cartopia/constants/bottom_bar.dart';
 import 'package:cartopia/constants/error_handle.dart';
 import 'package:cartopia/constants/utils.dart';
-import 'package:cartopia/features/auth/home/screens/home_screen.dart';
+import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/models/user.dart';
 import 'package:cartopia/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -84,12 +84,11 @@ class AuthService {
 
     }
   }
-
   void getuserdata({
     required BuildContext context
   }) async {
     try{
-
+      print('getting user data');
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString('x-auth-token');
       print(token);
