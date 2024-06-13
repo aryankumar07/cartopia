@@ -62,7 +62,7 @@ class AuthService {
       http.Response res = await http.get(
         Uri.parse('$baseUri/api/signin'),
         headers: <String,String>{
-          'Content-Type' : 'application/json charset=UTD-8',
+          'Content-Type' : 'application/json; charset=UTF-8',
           'email' : email,
           'password' : password
         }

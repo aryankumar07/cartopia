@@ -1,11 +1,15 @@
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cartopia/common/custom_button.dart';
 import 'package:cartopia/common/custom_tfield.dart';
 import 'package:cartopia/constants/utils.dart';
+import 'package:cartopia/features/admin/services/admin_service.dart';
 import 'package:cartopia/features/home/widgets/crousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+
+final AdminService adminService = AdminService();
 
 class AddProductScreen extends StatefulWidget {
   static const String routeName  = 'admin/add-product';
@@ -25,6 +29,8 @@ class _AddProductScreenState extends State<AddProductScreen> {
   String current = 'Painting';
 
   List<File> images=[];
+
+  final _addProductformkey = GlobalKey<FormState>();
 
   List<String> artForms =[
     'Painting', 
@@ -52,6 +58,27 @@ class _AddProductScreenState extends State<AddProductScreen> {
     priceController.dispose();
     qunatityController.dispose();
   }
+  
+  void refershPage(){
+
+  }
+
+  void sellproduct(){
+    if(images.isNotEmpty){
+      adminService.sellProduct(
+        context: context, 
+        name: productController.text, 
+        description: descriptionController.text, 
+        category: current, 
+        price: double.parse(priceController.text), 
+        quantity: double.parse(qunatityController.text),
+        images: images,
+        // onpressed: refershPage, 
+        );
+    }else{
+      showsnackbar(context, 'No images added');
+    }
+  }
 
 
   @override
@@ -77,6 +104,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
         padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
           child: Form(
+            key: _addProductformkey,
             child: Column(
               children: [
                 images.isNotEmpty ?
@@ -150,7 +178,13 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           current = newval!;
                         });
                       }),
-                  )
+                  ),
+                  
+                  SizedBox(height: 10,),
+                  
+                  CustomButton(
+                    text: 'Sell product', 
+                    onTap: sellproduct)
               ],
             ),
           ),

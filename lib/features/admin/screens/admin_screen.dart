@@ -1,5 +1,9 @@
+import 'package:cartopia/features/admin/screens/add_product_screen.dart';
 import 'package:cartopia/features/admin/screens/post_screen.dart';
+import 'package:cartopia/models/product.dart';
+import 'package:cartopia/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({super.key});
