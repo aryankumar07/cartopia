@@ -2,6 +2,7 @@ import 'package:cartopia/constants/bottom_bar.dart';
 import 'package:cartopia/features/admin/screens/add_product_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/features/auth/screens/auth_screen.dart';
+import 'package:cartopia/features/home/widgets/category_display.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings){
@@ -30,6 +31,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_)=> AddProductScreen()
+      );
+
+    case CategoryDisplay.routeName :
+    var category = routeSettings.arguments as String;
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=> CategoryDisplay(
+        category: category,
+      )
       );
 
 

@@ -26,20 +26,31 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final TextEditingController priceController = TextEditingController();
   final TextEditingController qunatityController = TextEditingController();
 
-  String current = 'Painting';
+  String current = 'Impressionism';
 
   List<File> images=[];
 
   final _addProductformkey = GlobalKey<FormState>();
 
   List<String> artForms =[
-    'Painting', 
-    'Sculpture',
-    'Architecture',
-    'Literature',
-    'Cinema',
-    'Theatre',
-    'Music'
+    'Impressionism', 
+    'Pop art',
+    'Cubism',
+    'Surrealism',
+    'Contemporary art',
+    'Art Nouveau',
+    'Futurism',
+    'Romanticism',
+    'Art Deco',
+    'Baroque',
+    'Graffiti',
+    'Minimalism',
+    'BAUHAUS',
+    'Conceptual art',
+    'Harlem Renaissance',
+    'Constructivism',
+    'Contemporary',
+    'Dada'
   ];
 
   void pickimages() async {
@@ -57,10 +68,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
     descriptionController.dispose();
     priceController.dispose();
     qunatityController.dispose();
-  }
-  
-  void refershPage(){
-
   }
 
   void sellproduct(){
@@ -176,6 +183,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                       onChanged: (dynamic newval){
                         setState(() { 
                           current = newval!;
+                          print(current);
                         });
                       }),
                   ),

@@ -1,4 +1,5 @@
 import 'package:cartopia/features/home/screens/home_screen.dart';
+import 'package:cartopia/features/home/widgets/category_screen.dart';
 import 'package:cartopia/features/home/widgets/crousel_slider.dart';
 import 'package:cartopia/features/home/widgets/search_bar.dart';
 import 'package:cartopia/providers/user_provider.dart';
@@ -127,7 +128,7 @@ class _TopBarState extends State<TopBar> {
         ],
 
         if(_option2)...[
-          Text('prodcuts column')
+          CategoryScreen(),
         ]
 
       ],
