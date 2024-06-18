@@ -3,6 +3,7 @@ import 'package:cartopia/features/admin/screens/add_product_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/features/auth/screens/auth_screen.dart';
 import 'package:cartopia/features/home/widgets/category_display.dart';
+import 'package:cartopia/features/search/screen/search_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings){
@@ -39,6 +40,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
       settings: routeSettings,
       builder: (_)=> CategoryDisplay(
         category: category,
+      )
+      );
+    
+    case SearchScreen.routeName :
+    String searchQuery = routeSettings.arguments as String;
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=> SearchScreen(
+        searchQuery: searchQuery,
       )
       );
 
