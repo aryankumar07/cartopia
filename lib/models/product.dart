@@ -2,6 +2,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cartopia/models/rating.dart';
+
 class Product {
     final String name;
     final String description;
@@ -11,6 +13,7 @@ class Product {
     final String? userId;
     final double quantity;
     final List<String> images;
+    final List<Rating>? rating;
 
   Product({
     required this.name,
@@ -19,8 +22,10 @@ class Product {
     required this.price,
     required this.quantity,
     required this.images,
+    // this.rating,
     this.id,
     this.userId,
+    this.rating,
   });
 
 
@@ -34,6 +39,7 @@ class Product {
       'images': images,
       'id': id,
       'userId': userId,
+      'rating':rating,
     };
   }
 
@@ -47,6 +53,7 @@ class Product {
       images: List<String>.from(map['images']),
       id: map['_id'],
       userId: map['userId'],
+      rating: map['rating'] != null ? List<Rating>.from(map['rating']?.map((x)=>Rating.fromMap(x))) : null
     );
   }
 

@@ -68,6 +68,8 @@ class AuthService {
         }
       );
 
+      print(res.body);
+
       HttpErrorhandler(
         response: res, 
         context: context, 

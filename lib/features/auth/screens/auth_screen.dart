@@ -54,6 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void signinuser(){
+    print('clicked');
     authService.signinuser(
       context: context, 
       email: _emailcontoller.text, 
