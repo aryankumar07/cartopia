@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cartopia/features/home/widgets/crousel_slider.dart';
+import 'package:cartopia/features/product_detail/service/product_detail_service.dart';
 import 'package:cartopia/features/product_detail/widgets/delivery_card.dart';
 import 'package:cartopia/features/product_detail/widgets/product_owner_card.dart';
 import 'package:cartopia/features/product_detail/widgets/rating_display.dart';
@@ -24,6 +25,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
+  ProductDetailService productDetailService = ProductDetailService();
 
   double averageRating=0;
   double myRating = 0;
@@ -38,6 +40,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
     averageRating = averageRating/widget.product.rating!.length;
     print(averageRating);
+  }
+
+  void addToCart(){
+    productDetailService.addToCart(context: context, product: widget.product);
   }
 
 @override
@@ -194,7 +200,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(onPressed: (){}, child: Text('Buy Now')),
-                ElevatedButton(onPressed: (){}, child: Text('Add To Cart')),
+                ElevatedButton(onPressed: addToCart, child: Text('Add To Cart')),
               ],
             ),
           ],

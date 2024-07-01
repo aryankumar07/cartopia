@@ -27,7 +27,9 @@ class AuthService {
         id: '', 
         address: '', 
         type: '', 
-        token: '');
+        token: '',
+        cart: [],
+        );
 
         http.Response res = await http.post(
           Uri.parse('$baseUri/api/signup'),
@@ -57,7 +59,7 @@ class AuthService {
     required String email,
     required String password,
   }) async {
-
+    // print('working');
     try{
       http.Response res = await http.get(
         Uri.parse('$baseUri/api/signin'),

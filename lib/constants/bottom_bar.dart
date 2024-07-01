@@ -1,4 +1,5 @@
 import 'package:cartopia/features/account/screen/account_screen.dart';
+import 'package:cartopia/features/cart/screen/cart_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _BottomBarState extends State<BottomBar> {
   final List<Widget> pages = [
     HomeScreen(),
     AccountScreen(),
-    Center(child: Text('Cart page'),),
+    CartScreen()
   ];
 
   void updatePage(int page){
