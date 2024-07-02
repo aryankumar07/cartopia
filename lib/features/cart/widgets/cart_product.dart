@@ -1,4 +1,4 @@
-import 'package:cartopia/features/cart/service/cart_service.dart';
+ import 'package:cartopia/features/cart/service/cart_service.dart';
 import 'package:cartopia/features/product_detail/screen/product_detail_screen.dart';
 import 'package:cartopia/features/product_detail/service/product_detail_service.dart';
 import 'package:cartopia/models/product.dart';

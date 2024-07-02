@@ -7,7 +7,8 @@ class User {
   final String email;
   final String password;
   final String id;
-  final String address;
+  // final String address;
+  final List<String> address;
   final String type;
   final String token;
   final List<dynamic> cart;
@@ -44,7 +45,7 @@ class User {
       email: map['email'] ?? '',
       password: map['password'] ?? '',
       id: map['_id'] ?? '',
-      address: map['address'] ?? '',
+      address: List<String>.from(map['address']),
       type: map['type'] ?? '',
       token: map['token'] ?? '',
       cart: List<Map<String,dynamic>>.from(map['cart']?.map((x)=>Map<String,dynamic>.from(x)))
@@ -60,7 +61,7 @@ class User {
     String? email,
     String? password,
     String? id,
-    String? address,
+    List<String>? address,
     String? type,
     String? token,
     List<dynamic>? cart,

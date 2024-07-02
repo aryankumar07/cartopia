@@ -1,3 +1,4 @@
+import 'package:cartopia/features/address/screens/address_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/models/user.dart';
 import 'package:cartopia/providers/user_provider.dart';
@@ -15,8 +16,8 @@ class _CartTotalState extends State<CartTotal> {
 
   
 
-  void calculateTotal(User user){
-    
+  void naviagteToAdress(String choosenAddress){
+    Navigator.pushNamed(context, AddressScreen.routeName,arguments: choosenAddress);
   }
 
   @override
@@ -48,8 +49,8 @@ class _CartTotalState extends State<CartTotal> {
               height: 15,
             ),
             GestureDetector(
-              onTap: (){
-                calculateTotal(user);
+              onTap : (){
+                naviagteToAdress(user.address[0]);
               },
               child: Container(
                 height: 50,

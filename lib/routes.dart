@@ -1,4 +1,6 @@
 import 'package:cartopia/constants/bottom_bar.dart';
+import 'package:cartopia/features/address/screens/address_screen.dart';
+import 'package:cartopia/features/address/screens/change_address.dart';
 import 'package:cartopia/features/admin/screens/add_product_screen.dart';
 import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/features/auth/screens/auth_screen.dart';
@@ -59,6 +61,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
     return MaterialPageRoute(
       builder: (_)=>ProductDetailScreen(
         product: product));
+
+    case AddressScreen.routeName :
+    String choosenAddress = routeSettings.arguments as String;
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>AddressScreen(
+        choosenAddress: choosenAddress,
+      ));
+
+
+    case ChangeAddress.routeName:
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>ChangeAddress());
 
 
     default :

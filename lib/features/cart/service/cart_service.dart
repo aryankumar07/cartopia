@@ -44,4 +44,44 @@ class CartService{
       showsnackbar(context, e.toString());
     }
   }
+
+  void addnewAddress({
+    required BuildContext context,
+    required String address,
+  })async{
+    final userprovider = Provider.of<userProvider>(context,listen: false);
+    try{
+      http.Response response = await  http.post(
+        Uri.parse('$baseUri/api/add-new-address'),
+        body: jsonEncode({
+          'address' : address
+        }),
+        headers: <String,String> {
+          'Content-Type' : 'application/json; charset=UTF-8',
+          'x-auth-token' : userprovider.user.token
+        }
+      );
+
+      print(jsonDecode(response.body)['address']);
+
+      HttpErrorhandler(
+        response: response, 
+        context: context, 
+        onpresed: (){
+          List<String> address = List<String>.from(jsonDecode(response.body)['address']);
+          User user = userprovider.user.copyWith(
+            address: address
+          );
+          userprovider.setUserFromModel(user);
+        });
+
+        showsnackbar(context, 'new address added');
+        Navigator.pop(context);
+
+    }catch(e){
+      showsnackbar(context, e.toString());
+    }
+  }
+
+
 }

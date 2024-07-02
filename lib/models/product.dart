@@ -60,4 +60,28 @@ class Product {
   String toJson() => json.encode(toMap());
 
   factory Product.fromJson(String source) => Product.fromMap(json.decode(source));
+
+  Product copyWith({
+    String? name,
+    String? description,
+    String? category,
+    double? price,
+    String? id,
+    String? userId,
+    double? quantity,
+    List<String>? images,
+    List<Rating>? rating,
+  }) {
+    return Product(
+      name: name ?? this.name,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      price: price ?? this.price,
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      quantity: quantity ?? this.quantity,
+      images: images ?? this.images,
+      rating: rating ?? this.rating,
+    );
+  }
 }
