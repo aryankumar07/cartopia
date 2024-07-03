@@ -8,6 +8,7 @@ import 'package:cartopia/features/home/widgets/category_display.dart';
 import 'package:cartopia/features/product_detail/screen/product_detail_screen.dart';
 import 'package:cartopia/features/search/screen/search_screen.dart';
 import 'package:cartopia/models/product.dart';
+import 'package:cartopia/common/webview_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings){
@@ -63,11 +64,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
         product: product));
 
     case AddressScreen.routeName :
-    String choosenAddress = routeSettings.arguments as String;
+    Map<String,dynamic> data = routeSettings.arguments as Map<String,dynamic>;
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_)=>AddressScreen(
-        choosenAddress: choosenAddress,
+        choosenAddress: data['choosenadress'],
+        totalAmount: data['totalamount'],
       ));
 
 
@@ -75,6 +77,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings){
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (_)=>ChangeAddress());
+
+    case WebviewScreen.routeName:
+    final URL = routeSettings.arguments as String;
+    return MaterialPageRoute(
+      settings: routeSettings,
+      builder: (_)=>WebviewScreen(
+        URL: URL,
+      ));
 
 
     default :

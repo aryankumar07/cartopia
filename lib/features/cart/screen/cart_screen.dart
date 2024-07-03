@@ -39,12 +39,15 @@ class _CartScreenState extends State<CartScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              'Delivery To :- ${user.address[0]}',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-                overflow: TextOverflow.ellipsis,
+            Container(
+              width: 300,
+              child: Text(
+                'Delivery To :- ${ user.address.length==0? 'No Address Found' :  user.address[0]}',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ),
             Container(
@@ -148,7 +151,11 @@ class _CartScreenState extends State<CartScreen> {
         )
 
       ),
-      body:Column(
+      body: user.cart.length==0? 
+      Center(
+        child: Text('Cart is Empty'),
+      )
+       : Column(
           children: [
             SizedBox(height: 20,),
             CartTotal(),
@@ -161,7 +168,7 @@ class _CartScreenState extends State<CartScreen> {
                   final Product product = Product.fromMap(productdata);
                   return CartProduct(product: product,quantity: quantity,);
                 }),
-            )
+            ),
           ],
         ),
     );

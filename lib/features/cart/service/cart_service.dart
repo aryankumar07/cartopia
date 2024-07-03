@@ -83,5 +83,45 @@ class CartService{
     }
   }
 
+  void placeorder({
+    required BuildContext context,
+    required String address,
+    required double totalsum,
+  })async{
+
+    final userprovider = Provider.of<userProvider>(context,listen: false);
+
+    try{
+
+      http.Response response = await http.post(
+        Uri.parse('$baseUri/api/order'),
+        body: jsonEncode({
+          'cart' : userprovider.user.cart,
+          'address':address,
+          'totalprice':totalsum
+        }),
+         headers: <String,String> {
+          'Content-Type' : 'application/json; charset=UTF-8',
+          'x-auth-token' : userprovider.user.token
+        }
+      );
+
+      HttpErrorhandler(
+        response: response, 
+        context: context, 
+        onpresed: (){
+          showsnackbar(context, 'Your order has been placed');
+          User user = userprovider.user.copyWith(
+            cart: []
+          );
+          userprovider.setUserFromModel(user);
+          print(response.body);
+        });
+
+    }catch(e){
+      showsnackbar(context, e.toString());
+    }
+  }
+
 
 }
