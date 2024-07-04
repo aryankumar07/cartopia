@@ -1,6 +1,10 @@
+import 'package:cartopia/features/account/service/account_service.dart';
 import 'package:cartopia/features/account/widget/account_top_bar.dart';
 import 'package:cartopia/features/account/widget/profile_bar.dart';
 import 'package:cartopia/features/account/widget/single_product.dart';
+import 'package:cartopia/features/order_detail/screen/order_detail_screen.dart';
+import 'package:cartopia/models/order.dart';
+import 'package:cartopia/models/product.dart';
 import 'package:cartopia/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,12 +18,32 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
 
-  List<String> productList = [
-    'https://images.unsplash.com/photo-1524289286702-f07229da36f5?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1515940279136-2f419eea8051?q=80&w=3027&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1504274066651-8d31a536b11a?q=80&w=2448&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    'https://images.unsplash.com/photo-1533675180235-0ba57d720b51?q=80&w=3071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  ];
+  final AccountService accountService = AccountService();
+
+  List<Order> orderList=[];
+
+  Map<String,int> imageUrlMap={};
+  List<String> imageUrl=[];
+
+  void getorderList() async {
+    orderList = await accountService.getUserOrders(context: context);
+    for(int i=0;i<orderList.length;i++){
+      List<Product> productList = orderList[i].products;
+      for(int j=0;j<productList.length;j++){
+        imageUrlMap[productList[j].images[0]]=i;
+        imageUrl.add(productList[j].images[0]);
+      }
+    }
+    print(imageUrlMap);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getorderList();
+  }
 
 
 
@@ -67,7 +91,10 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     ListTile(
-                      onTap: (){},
+                      onTap: ()async{
+                        List<Order> orders= await accountService.getUserOrders(context: context);
+                        print(orders);
+                      },
                       leading: Icon(Icons.shop_2),
                       title: Text('Your Orders'),
                       trailing: Icon(Icons.arrow_forward_ios),
@@ -99,15 +126,27 @@ class _AccountScreenState extends State<AccountScreen> {
 
             Container(
               height: 170,
+              width: double.infinity,
               padding: EdgeInsets.only(top: 10,left: 10,right: 0,bottom: 10),
               decoration: BoxDecoration(
                 color: Colors.white
               ),
-              child: ListView.builder(
+              child: orderList.length==0? 
+              Text('No Orders Placed') 
+              : ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: productList.length,
+                itemCount: imageUrl.length,
                 itemBuilder: (context,index){
-                  return SingleProduct(imageUrl: productList[index],);
+                  return GestureDetector(
+                    onTap: (){
+                      int pos = imageUrlMap[imageUrl[index]]!;
+                      print(pos);
+                      Navigator.pushNamed(
+                        context, 
+                        OrderDetailScreen.routeName,
+                        arguments: orderList[pos]);
+                    },
+                    child: SingleProduct(imageUrl: imageUrl[index]));
                 }),
             )
 
