@@ -1,6 +1,7 @@
 import 'package:cartopia/constants/loader.dart';
 import 'package:cartopia/features/account/widget/single_product.dart';
 import 'package:cartopia/features/admin/screens/add_product_screen.dart';
+import 'package:cartopia/features/product_detail/screen/product_detail_screen.dart';
 import 'package:cartopia/models/product.dart';
 import 'package:cartopia/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _PostScreenState extends State<PostScreen> {
 
   void getProducts(String userId)async{
     products = await adminService.getProducts(context: context, userId: userId);
+    // print(products);
     setState(() {});
   }
 
@@ -59,34 +61,39 @@ class _PostScreenState extends State<PostScreen> {
             final product = products![index];
             return Container(
               margin: EdgeInsets.all(5),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 130,
-                    child: SingleProduct(imageUrl: product.images[0])),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                            product.name,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, ProductDetailScreen.routeName,arguments: product);
+                },
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 130,
+                      child: SingleProduct(imageUrl: product.images[0])),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                              product.name,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal
+                              ),
                             ),
-                          ),
-                      ),
-                      
-                      IconButton(
-                        onPressed: (){
-                          deleteProduct(product.id!);
-                        }, 
-                        icon: Icon(Icons.delete_outline))
-                    ],
-                  )
-                ],
+                        ),
+                        
+                        IconButton(
+                          onPressed: (){
+                            deleteProduct(product.id!);
+                          }, 
+                          icon: Icon(Icons.delete_outline))
+                      ],
+                    )
+                  ],
+                ),
               ),
             );
           }),

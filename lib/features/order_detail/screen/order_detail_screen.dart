@@ -1,8 +1,14 @@
+import 'package:cartopia/common/custom_button.dart';
+import 'package:cartopia/features/admin/screens/add_product_screen.dart';
+import 'package:cartopia/features/admin/services/admin_service.dart';
+import 'package:cartopia/features/home/screens/home_screen.dart';
 import 'package:cartopia/features/order_detail/widgets/order_card.dart';
 import 'package:cartopia/models/order.dart';
 import 'package:cartopia/models/product.dart';
+import 'package:cartopia/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailScreen extends StatefulWidget {
   static const String routeName = '/order-detail';
@@ -19,6 +25,19 @@ class OrderDetailScreen extends StatefulWidget {
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   int currentstep =0;
+  AdminService adminService = AdminService();
+
+  void changeorderStatus(int status){
+    adminService.changeOrderStatus(
+      context: context, 
+      status: status+1, 
+      order: widget.order, 
+      backPressed: (){
+        setState(() {
+          currentstep+=1;
+        });
+      });
+  }
 
   @override
   void initState() {
@@ -29,6 +48,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userprovider = Provider.of<userProvider>(context,listen: false);
   List<Product> productlist = widget.order.products;
   List<int> quantityList = widget.order.quantity;
     return Scaffold(
@@ -135,7 +155,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
                 child: Stepper(
                   currentStep: currentstep,
-                  controlsBuilder: (context,detail){
+                  controlsBuilder: (context,details){
+                    if(userprovider.user.type=='admin'){
+                      return CustomButton(text: 'Done', onTap: (){
+                        changeorderStatus(details.currentStep);
+                      });
+                    }
                     return SizedBox();
                   },
                   steps: [

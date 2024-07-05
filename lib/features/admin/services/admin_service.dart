@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cartopia/constants/error_handle.dart';
 import 'package:cartopia/constants/utils.dart';
 import 'package:cartopia/locker.dart';
+import 'package:cartopia/models/order.dart';
 import 'package:cartopia/models/product.dart';
 import 'package:cartopia/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -115,7 +116,7 @@ class AdminService {
 
       http.Response response = await http.post(
         Uri.parse('$baseUri/admin/delete-product'),
-        headers:{
+        headers:<String,String>{
           'Content-Type' : 'application/json; charset=UTF-8',
           'x-auth-token' : userprovider.user.token,
           'productId' : productId
@@ -136,6 +137,70 @@ class AdminService {
     
     return deleted;
 
+   }
+
+   void changeOrderStatus({
+    required BuildContext context,
+    required int status,
+    required Order order,
+    required VoidCallback backPressed
+   })async{
+    final userprovider = Provider.of<userProvider>(context,listen: false);
+    try{
+      http.Response response = await http.post(
+        Uri.parse('$baseUri/admin/change-order-status'),
+        headers: <String,String>{
+          'Content-Type' : 'applicatiob/json; charset=UTF-8',
+          'x-auth-token' : userprovider.user.token,
+        },
+        body: jsonEncode({
+          'id' : order.id,
+          'status' : status,
+        })
+      );
+
+      HttpErrorhandler(
+        response: response, 
+        context: context, 
+        onpresed: (){
+          backPressed;
+        });
+    }catch(e){
+      showsnackbar(context, e.toString());
+    }
+   }
+
+   Future<List<Product>> fetchOrderPlaced({
+    required BuildContext context
+   })async{
+    List<Product> productlist =[];
+    try{
+      final userprovider = Provider.of<userProvider>(context,listen: false);
+      http.Response response = await http.get(
+        Uri.parse('$baseUri/admin/fetch-order'),
+        headers: <String,String>{
+          'Content-Type' : 'application/json; charset=UTF-8',
+          'x-auth-token' : userprovider.user.token,
+        },
+      );
+
+      HttpErrorhandler(
+        response: response, 
+        context: context, onpresed: (){
+          final data = jsonDecode(response.body);
+          for(int i=0;i<data.length;i++){
+            productlist.add(
+              Product.fromJson(jsonEncode(data[i]))
+            );
+          }
+          // print(productlist);
+        });
+
+    }catch(e){
+      showsnackbar(context, e.toString());
+    }
+
+    return productlist;
    }
 
 }

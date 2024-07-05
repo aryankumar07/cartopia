@@ -55,6 +55,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<userProvider>(context,listen: false).user;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -196,13 +197,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               ),
             ),
             SizedBox(height: 20,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(onPressed: (){}, child: Text('Buy Now')),
-                ElevatedButton(onPressed: addToCart, child: Text('Add To Cart')),
-              ],
-            ),
+            if(user.type=='user')...[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(onPressed: (){}, child: Text('Buy Now')),
+                  ElevatedButton(onPressed: addToCart, child: Text('Add To Cart')),
+                ],
+              ),
+            ],
           ],
         ),
       ),

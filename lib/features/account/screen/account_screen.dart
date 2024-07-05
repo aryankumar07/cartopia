@@ -112,7 +112,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       trailing: Icon(Icons.arrow_forward_ios),
                     ),
                     ListTile(
-                      onTap: (){},
+                      onTap: (){
+                        accountService.logOut(context: context);
+                      },
                       leading: Icon(Icons.logout),
                       title: Text('Log Out'),
                       trailing: Icon(Icons.arrow_forward_ios),

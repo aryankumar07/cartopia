@@ -1,4 +1,5 @@
 import 'package:cartopia/features/admin/screens/add_product_screen.dart';
+import 'package:cartopia/features/admin/screens/order_placed_screen.dart';
 import 'package:cartopia/features/admin/screens/post_screen.dart';
 import 'package:cartopia/models/product.dart';
 import 'package:cartopia/providers/user_provider.dart';
@@ -25,7 +26,8 @@ class _AdminScreenState extends State<AdminScreen> {
   List<Widget> adminList = [
     PostScreen(),
     Center(child: Text('analtics'),),
-    Center(child: Text('inbox'),),
+    // Center(child: Text('inbox'),),
+    OrderPlacedScreen(),
   ];
 
 
